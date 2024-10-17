@@ -1,23 +1,41 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
 function App() {
+  // Random number between 1 and 10
+  const [randomNumber] = useState(Math.floor(Math.random() * 10) + 1);
+  const [guess, setGuess] = useState(''); // User guess input
+  const [feedback, setFeedback] = useState(''); // Feedback message
+
+  // Function to handle user input
+  const handleGuess = () => {
+    const guessedNumber = parseInt(guess, 10); // Convert guess to a number
+
+    if (guessedNumber === randomNumber) {
+      setFeedback('Correct! You guessed the right number!');
+    } else if (guessedNumber > randomNumber) {
+      setFeedback('Too high! Try again.');
+    } else if (guessedNumber < randomNumber) {
+      setFeedback('Too low! Try again.');
+    } else {
+      setFeedback('Please enter a valid number between 1 and 10.');
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Guess the Number Game</h1>
+      <p>Guess a number between 1 and 10</p>
+     
+      <input
+        type="number"
+        value={guess}
+        onChange={(e) => setGuess(e.target.value)}
+      />
+     
+      <button onClick={handleGuess}>Guess</button>
+     
+      <p>{feedback}</p>
     </div>
   );
 }
